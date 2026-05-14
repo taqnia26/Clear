@@ -1,6 +1,6 @@
-# [Project name]
+# Clear Clinic (عيادة كلير)
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Bilingual (Arabic primary/RTL + English) professional website for a cosmetic and dental clinic in Saudi Arabia, with appointment booking, services/packages display, and an advanced admin dashboard.
 
 ## Run & Operate
 
@@ -19,26 +19,48 @@ _Replace the heading above with the project's name, and this line with one sente
 - Validation: Zod (`zod/v4`), `drizzle-zod`
 - API codegen: Orval (from OpenAPI spec)
 - Build: esbuild (CJS bundle)
+- Frontend: React + Vite + Wouter + TanStack Query + Framer Motion + Recharts + Tailwind CSS v4 + shadcn
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/clear-clinic/` — React frontend (main app)
+- `artifacts/api-server/` — Express backend
+- `lib/api-client-react/` — Generated TanStack Query hooks
+- `lib/api-spec/` — OpenAPI spec (source of truth for API contracts)
+- `lib/db/` — Drizzle schema and migrations
+- `artifacts/clear-clinic/src/lib/i18n.ts` — All Arabic/English translations
+- `artifacts/clear-clinic/src/contexts/` — ThemeContext, LanguageContext, AuthContext
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- **RTL-first**: Default language is Arabic; HTML `dir` attribute toggled dynamically via LanguageContext.
+- **Cookie-based admin auth**: Sessions stored server-side with `express-session`, `admin_id` cookie; no JWT.
+- **Schema-first API**: OpenAPI spec → Orval codegen → typed React Query hooks; server uses Zod validation.
+- **Framer Motion Variants**: All `Variants` objects typed with `type Variants` import; `ease` values removed to avoid TS errors with framer-motion's strict `Easing` type.
+- **Role-based access**: superadmin > admin > receptionist; receptionist can only see Appointments.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **Public site**: Home (parallax hero, stats, services, packages, doctors, testimonials, CTA), Services (filtered by category), Doctors, Packages (with discounts), Testimonials, Book Appointment form
+- **Admin panel**: Login → Dashboard (Recharts pie+bar), Appointments (status management), Doctors/Services/Packages/Testimonials CRUD
+- **Bilingual**: All pages fully bilingual Arabic/English with language toggle in navbar
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Arabic is the primary language (RTL layout by default)
+- Glassmorphism + parallax + Framer Motion animations throughout
+- Light/Dark mode toggle always visible in navbar and admin sidebar
+- All admin buttons must be functional (real API calls, no mocked data)
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `framer-motion` `ease` property must not be typed as plain `string` — use `Variants` type and avoid specifying `ease` in transition, or use `as const` on literal arrays.
+- `Doctor.specialty` is a single enum value (`"cosmetic" | "dental" | "both"`), not `specialtyAr`/`specialtyEn`.
+- `Doctor.experience` is `number | null` (not `experienceYears`).
+- `Testimonial.patientName` is a single field; comments are `commentAr`/`commentEn`.
+- `DashboardStats` only has: `totalAppointments`, `pendingAppointments`, `confirmedToday`, `totalDoctors`, `totalServices`, `totalPackages`, `totalTestimonials`.
+- `Service.priceFrom` and all `Package` price fields are `number | null`, not strings.
+- Admin credentials: `admin / admin123`, `receptionist / recep123`.
 
 ## Pointers
 

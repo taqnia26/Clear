@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Clear Clinic"
+version = "1.0.0"
+id = "artifacts/clear-clinic"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20751
+
+[services.development]
+run = "pnpm --filter @workspace/clear-clinic run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/clear-clinic", "run", "build" ]
+publicDir = "artifacts/clear-clinic/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20751"
+BASE_PATH = "/"

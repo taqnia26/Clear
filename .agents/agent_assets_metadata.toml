@@ -1,0 +1,32 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "VAyz35l18xXC73nhU93T4"
+uri = "file://artifacts/clear-clinic/src/assets/images/hero.png"
+type = "image"
+title = "Clinic hero background"
+
+[[generated]]
+id = "_YV41iQ-sd_R1Dxp233JQ"
+uri = "file://artifacts/clear-clinic/src/assets/images/service-teeth.png"
+type = "image"
+title = "Teeth whitening service"
+
+[[generated]]
+id = "qWbJ_zezH5TYD8mo79dyX"
+uri = "file://artifacts/clear-clinic/src/assets/images/service-derma.png"
+type = "image"
+title = "Cosmetic dermatology service"
+
+[[generated]]
+id = "h8pzlDgzWAqZJYtd_FI3D"
+uri = "file://artifacts/clear-clinic/src/assets/images/service-implants.png"
+type = "image"
+title = "Dental implants service"
+
+[[generated]]
+id = "xFQtV8itX8yz3qidKjLEa"
+uri = "file://artifacts/clear-clinic/src/assets/images/service-lips.png"
+type = "image"
+title = "Lip enhancement service"

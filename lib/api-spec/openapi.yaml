@@ -3,20 +3,34 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Clear Clinic - Cosmetic & Dental Clinic API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: doctors
+    description: Doctor management
+  - name: services
+    description: Services and treatments
+  - name: packages
+    description: Treatment packages and offers
+  - name: appointments
+    description: Appointment booking
+  - name: testimonials
+    description: Patient testimonials
+  - name: dashboard
+    description: Dashboard analytics
+  - name: auth
+    description: Admin authentication
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +38,597 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # AUTH
+  /auth/login:
+    post:
+      operationId: adminLogin
+      tags: [auth]
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+
+  /auth/logout:
+    post:
+      operationId: adminLogout
+      tags: [auth]
+      summary: Admin logout
+      responses:
+        "200":
+          description: Logged out
+
+  /auth/me:
+    get:
+      operationId: getAuthMe
+      tags: [auth]
+      summary: Get current admin user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUser"
+        "401":
+          description: Not authenticated
+
+  # DOCTORS
+  /doctors:
+    get:
+      operationId: listDoctors
+      tags: [doctors]
+      summary: List all doctors
+      parameters:
+        - name: specialty
+          in: query
+          schema:
+            type: string
+        - name: active
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of doctors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Doctor"
+    post:
+      operationId: createDoctor
+      tags: [doctors]
+      summary: Create a doctor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DoctorInput"
+      responses:
+        "201":
+          description: Doctor created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Doctor"
+
+  /doctors/{id}:
+    get:
+      operationId: getDoctor
+      tags: [doctors]
+      summary: Get a doctor by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Doctor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Doctor"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateDoctor
+      tags: [doctors]
+      summary: Update a doctor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DoctorUpdate"
+      responses:
+        "200":
+          description: Updated doctor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Doctor"
+    delete:
+      operationId: deleteDoctor
+      tags: [doctors]
+      summary: Delete a doctor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # SERVICES
+  /services:
+    get:
+      operationId: listServices
+      tags: [services]
+      summary: List all services
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+            enum: [cosmetic, dental, both]
+        - name: active
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+    post:
+      operationId: createService
+      tags: [services]
+      summary: Create a service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceInput"
+      responses:
+        "201":
+          description: Service created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+
+  /services/{id}:
+    get:
+      operationId: getService
+      tags: [services]
+      summary: Get a service by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Service
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+    patch:
+      operationId: updateService
+      tags: [services]
+      summary: Update a service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+    delete:
+      operationId: deleteService
+      tags: [services]
+      summary: Delete a service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # PACKAGES
+  /packages:
+    get:
+      operationId: listPackages
+      tags: [packages]
+      summary: List packages and offers
+      parameters:
+        - name: featured
+          in: query
+          schema:
+            type: boolean
+        - name: active
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Package"
+    post:
+      operationId: createPackage
+      tags: [packages]
+      summary: Create a package
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PackageInput"
+      responses:
+        "201":
+          description: Package created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+
+  /packages/{id}:
+    get:
+      operationId: getPackage
+      tags: [packages]
+      summary: Get a package by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Package
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+    patch:
+      operationId: updatePackage
+      tags: [packages]
+      summary: Update a package
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PackageUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+    delete:
+      operationId: deletePackage
+      tags: [packages]
+      summary: Delete a package
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # APPOINTMENTS
+  /appointments:
+    get:
+      operationId: listAppointments
+      tags: [appointments]
+      summary: List appointments
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, confirmed, cancelled, completed]
+        - name: doctorId
+          in: query
+          schema:
+            type: integer
+        - name: date
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: List of appointments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Appointment"
+    post:
+      operationId: createAppointment
+      tags: [appointments]
+      summary: Book an appointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppointmentInput"
+      responses:
+        "201":
+          description: Appointment booked
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Appointment"
+
+  /appointments/{id}:
+    get:
+      operationId: getAppointment
+      tags: [appointments]
+      summary: Get an appointment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Appointment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Appointment"
+    patch:
+      operationId: updateAppointment
+      tags: [appointments]
+      summary: Update appointment status or details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppointmentUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Appointment"
+    delete:
+      operationId: deleteAppointment
+      tags: [appointments]
+      summary: Delete appointment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # TESTIMONIALS
+  /testimonials:
+    get:
+      operationId: listTestimonials
+      tags: [testimonials]
+      summary: List testimonials
+      parameters:
+        - name: approved
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of testimonials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+    post:
+      operationId: createTestimonial
+      tags: [testimonials]
+      summary: Submit a testimonial
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialInput"
+      responses:
+        "201":
+          description: Testimonial submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+
+  /testimonials/{id}:
+    patch:
+      operationId: updateTestimonial
+      tags: [testimonials]
+      summary: Approve or update a testimonial
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+    delete:
+      operationId: deleteTestimonial
+      tags: [testimonials]
+      summary: Delete a testimonial
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  # DASHBOARD
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [dashboard]
+      summary: Get overall dashboard statistics
+      responses:
+        "200":
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
+  /dashboard/appointments/recent:
+    get:
+      operationId: getRecentAppointments
+      tags: [dashboard]
+      summary: Get recent appointments
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: Recent appointments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Appointment"
+
+  /dashboard/appointments/by-status:
+    get:
+      operationId: getAppointmentsByStatus
+      tags: [dashboard]
+      summary: Get appointment counts grouped by status
+      responses:
+        "200":
+          description: Status breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StatusCount"
+
+  /dashboard/services/popular:
+    get:
+      operationId: getPopularServices
+      tags: [dashboard]
+      summary: Get most-booked services
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 5
+      responses:
+        "200":
+          description: Popular services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ServiceStats"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +639,463 @@ components:
       required:
         - status
 
+    LoginInput:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      required: [user, token]
+      properties:
+        user:
+          $ref: "#/components/schemas/AdminUser"
+        token:
+          type: string
+
+    AdminUser:
+      type: object
+      required: [id, username, role]
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+          enum: [superadmin, admin, receptionist]
+        createdAt:
+          type: string
+          format: date-time
+
+    Doctor:
+      type: object
+      required: [id, nameAr, nameEn, specialty, active]
+      properties:
+        id:
+          type: integer
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        titleAr:
+          type: ["string", "null"]
+        titleEn:
+          type: ["string", "null"]
+        specialty:
+          type: string
+          enum: [cosmetic, dental, both]
+        bioAr:
+          type: ["string", "null"]
+        bioEn:
+          type: ["string", "null"]
+        imageUrl:
+          type: ["string", "null"]
+        experience:
+          type: ["integer", "null"]
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    DoctorInput:
+      type: object
+      required: [nameAr, nameEn, specialty]
+      properties:
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        titleAr:
+          type: string
+        titleEn:
+          type: string
+        specialty:
+          type: string
+          enum: [cosmetic, dental, both]
+        bioAr:
+          type: string
+        bioEn:
+          type: string
+        imageUrl:
+          type: string
+        experience:
+          type: integer
+        active:
+          type: boolean
+
+    DoctorUpdate:
+      type: object
+      properties:
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        titleAr:
+          type: string
+        titleEn:
+          type: string
+        specialty:
+          type: string
+          enum: [cosmetic, dental, both]
+        bioAr:
+          type: string
+        bioEn:
+          type: string
+        imageUrl:
+          type: string
+        experience:
+          type: integer
+        active:
+          type: boolean
+
+    Service:
+      type: object
+      required: [id, nameAr, nameEn, category, active]
+      properties:
+        id:
+          type: integer
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        descriptionAr:
+          type: ["string", "null"]
+        descriptionEn:
+          type: ["string", "null"]
+        category:
+          type: string
+          enum: [cosmetic, dental, both]
+        imageUrl:
+          type: ["string", "null"]
+        durationMinutes:
+          type: ["integer", "null"]
+        priceFrom:
+          type: ["number", "null"]
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    ServiceInput:
+      type: object
+      required: [nameAr, nameEn, category]
+      properties:
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        descriptionAr:
+          type: string
+        descriptionEn:
+          type: string
+        category:
+          type: string
+          enum: [cosmetic, dental, both]
+        imageUrl:
+          type: string
+        durationMinutes:
+          type: integer
+        priceFrom:
+          type: number
+        active:
+          type: boolean
+
+    ServiceUpdate:
+      type: object
+      properties:
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        descriptionAr:
+          type: string
+        descriptionEn:
+          type: string
+        category:
+          type: string
+          enum: [cosmetic, dental, both]
+        imageUrl:
+          type: string
+        durationMinutes:
+          type: integer
+        priceFrom:
+          type: number
+        active:
+          type: boolean
+
+    Package:
+      type: object
+      required: [id, nameAr, nameEn, active]
+      properties:
+        id:
+          type: integer
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        descriptionAr:
+          type: ["string", "null"]
+        descriptionEn:
+          type: ["string", "null"]
+        originalPrice:
+          type: ["number", "null"]
+        discountedPrice:
+          type: ["number", "null"]
+        discountPercent:
+          type: ["number", "null"]
+        imageUrl:
+          type: ["string", "null"]
+        validUntil:
+          type: ["string", "null"]
+          format: date
+        featured:
+          type: boolean
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    PackageInput:
+      type: object
+      required: [nameAr, nameEn]
+      properties:
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        descriptionAr:
+          type: string
+        descriptionEn:
+          type: string
+        originalPrice:
+          type: number
+        discountedPrice:
+          type: number
+        discountPercent:
+          type: number
+        imageUrl:
+          type: string
+        validUntil:
+          type: string
+          format: date
+        featured:
+          type: boolean
+        active:
+          type: boolean
+
+    PackageUpdate:
+      type: object
+      properties:
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        descriptionAr:
+          type: string
+        descriptionEn:
+          type: string
+        originalPrice:
+          type: number
+        discountedPrice:
+          type: number
+        discountPercent:
+          type: number
+        imageUrl:
+          type: string
+        validUntil:
+          type: string
+          format: date
+        featured:
+          type: boolean
+        active:
+          type: boolean
+
+    Appointment:
+      type: object
+      required: [id, patientNameAr, patientNameEn, phone, status, appointmentDate, appointmentTime]
+      properties:
+        id:
+          type: integer
+        patientNameAr:
+          type: string
+        patientNameEn:
+          type: string
+        phone:
+          type: string
+        email:
+          type: ["string", "null"]
+        serviceId:
+          type: ["integer", "null"]
+        serviceName:
+          type: ["string", "null"]
+        doctorId:
+          type: ["integer", "null"]
+        doctorName:
+          type: ["string", "null"]
+        appointmentDate:
+          type: string
+          format: date
+        appointmentTime:
+          type: string
+        status:
+          type: string
+          enum: [pending, confirmed, cancelled, completed]
+        notesAr:
+          type: ["string", "null"]
+        notesEn:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    AppointmentInput:
+      type: object
+      required: [patientNameAr, patientNameEn, phone, appointmentDate, appointmentTime]
+      properties:
+        patientNameAr:
+          type: string
+        patientNameEn:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        serviceId:
+          type: integer
+        doctorId:
+          type: integer
+        appointmentDate:
+          type: string
+          format: date
+        appointmentTime:
+          type: string
+        notesAr:
+          type: string
+        notesEn:
+          type: string
+
+    AppointmentUpdate:
+      type: object
+      properties:
+        patientNameAr:
+          type: string
+        patientNameEn:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        serviceId:
+          type: integer
+        doctorId:
+          type: integer
+        appointmentDate:
+          type: string
+          format: date
+        appointmentTime:
+          type: string
+        status:
+          type: string
+          enum: [pending, confirmed, cancelled, completed]
+        notesAr:
+          type: string
+        notesEn:
+          type: string
+
+    Testimonial:
+      type: object
+      required: [id, patientName, rating, approved]
+      properties:
+        id:
+          type: integer
+        patientName:
+          type: string
+        rating:
+          type: integer
+        commentAr:
+          type: ["string", "null"]
+        commentEn:
+          type: ["string", "null"]
+        serviceId:
+          type: ["integer", "null"]
+        approved:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    TestimonialInput:
+      type: object
+      required: [patientName, rating]
+      properties:
+        patientName:
+          type: string
+        rating:
+          type: integer
+        commentAr:
+          type: string
+        commentEn:
+          type: string
+        serviceId:
+          type: integer
+
+    TestimonialUpdate:
+      type: object
+      properties:
+        approved:
+          type: boolean
+        commentAr:
+          type: string
+        commentEn:
+          type: string
+
+    DashboardStats:
+      type: object
+      required: [totalAppointments, pendingAppointments, confirmedToday, totalDoctors, totalServices, totalPackages]
+      properties:
+        totalAppointments:
+          type: integer
+        pendingAppointments:
+          type: integer
+        confirmedToday:
+          type: integer
+        totalDoctors:
+          type: integer
+        totalServices:
+          type: integer
+        totalPackages:
+          type: integer
+        totalTestimonials:
+          type: integer
+
+    StatusCount:
+      type: object
+      required: [status, count]
+      properties:
+        status:
+          type: string
+        count:
+          type: integer
+
+    ServiceStats:
+      type: object
+      required: [serviceId, nameAr, nameEn, bookingCount]
+      properties:
+        serviceId:
+          type: integer
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        bookingCount:
+          type: integer
