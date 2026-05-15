@@ -21,7 +21,7 @@ export default function Testimonials() {
           <Badge className="bg-primary/10 text-primary border-primary/20 mb-3">
             {lang === "ar" ? "آراء مرضانا" : "Patient Reviews"}
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Playfair Display, serif" }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
             {lang === "ar" ? "تجارب مرضانا" : "Patient Experiences"}
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">

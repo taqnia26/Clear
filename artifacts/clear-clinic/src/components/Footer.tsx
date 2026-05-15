@@ -17,7 +17,7 @@ export default function Footer() {
                 <span className="text-white font-bold text-sm">ع</span>
               </div>
               <div>
-                <div className="font-bold text-primary text-lg" style={{ fontFamily: isAr ? "Cairo, sans-serif" : "Playfair Display, serif" }}>
+                <div className="font-bold text-primary text-lg" style={{ fontFamily: isAr ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
                   {isAr ? "عيادة كلير" : "Clear Clinic"}
                 </div>
                 <div className="text-xs text-muted-foreground">{isAr ? "الجمال والأسنان" : "Beauty & Dental"}</div>

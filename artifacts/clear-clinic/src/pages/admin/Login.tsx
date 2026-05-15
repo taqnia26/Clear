@@ -62,7 +62,7 @@ export default function Login() {
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Shield className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-foreground" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Playfair Display, serif" }}>
+            <h1 className="text-2xl font-bold text-foreground" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
               {lang === "ar" ? "لوحة تحكم عيادة كلير" : "Clear Clinic Admin"}
             </h1>
             <p className="text-muted-foreground text-sm mt-1">

@@ -111,7 +111,7 @@ export default function AdminDoctors() {
     <AdminLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Playfair Display, serif" }}>
+          <h1 className="text-2xl font-bold" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
             {lang === "ar" ? "إدارة الأطباء" : "Manage Doctors"}
           </h1>
           <Button onClick={openCreate} size="sm">

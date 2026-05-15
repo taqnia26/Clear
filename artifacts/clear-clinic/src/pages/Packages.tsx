@@ -23,7 +23,7 @@ export default function Packages() {
           <Badge className="bg-secondary/20 text-secondary-foreground border-secondary/30 mb-3">
             {lang === "ar" ? "عروض حصرية" : "Exclusive Offers"}
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Playfair Display, serif" }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
             {t("specialOffers")}
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -101,8 +101,10 @@
   --sidebar-accent-foreground: 220 20% 10%;
   --sidebar-ring: 180 70% 30%;
 
-  --app-font-sans: 'Inter', sans-serif;
-  --app-font-serif: 'Playfair Display', serif;
+  --app-font-sans: 'Readex Pro', 'Inter', sans-serif;
+  --app-font-serif: 'Cormorant Garamond', 'Playfair Display', serif;
+  --app-font-display-ar: 'Tajawal', 'Readex Pro', sans-serif;
+  --app-font-display-en: 'Cormorant Garamond', 'Playfair Display', serif;
   --app-font-mono: Menlo, monospace;
   --radius: 0.75rem;
 
@@ -179,5 +181,30 @@
   }
   [dir="rtl"] .animate-marquee {
     animation: marquee 30s linear infinite reverse;
+  }
+}
+
+@layer base {
+  html[lang="ar"], [dir="rtl"] {
+    font-family: 'Readex Pro', 'Tajawal', sans-serif;
+  }
+  html[lang="ar"] body, [dir="rtl"] body {
+    font-family: 'Readex Pro', 'Tajawal', sans-serif;
+    letter-spacing: 0;
+  }
+  .font-display-ar {
+    font-family: 'Tajawal', 'Readex Pro', sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+  }
+  .font-display-en {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+  /* Arabic text should never be uppercased — it's not a thing */
+  [dir="rtl"] .uppercase {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
   }
 }
