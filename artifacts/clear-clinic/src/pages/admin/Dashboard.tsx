@@ -1,16 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { motion, type Variants } from "framer-motion";
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid
 } from "recharts";
+import { useQueryClient } from "@tanstack/react-query";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGetDashboardStats } from "@workspace/api-client-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Users, Star, Package } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Calendar, Users, Star, Package, Database, Loader2, Sparkles } from "lucide-react";
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -23,11 +32,46 @@ export default function Dashboard() {
   const { lang } = useLanguage();
   const { isAuthenticated } = useAuth();
   const [, navigate] = useLocation();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const { data: stats, isLoading } = useGetDashboardStats();
+  const [seedConfirmOpen, setSeedConfirmOpen] = useState(false);
+  const [seeding, setSeeding] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) navigate("/admin/login");
   }, [isAuthenticated, navigate]);
+
+  const handleSeed = async () => {
+    setSeeding(true);
+    try {
+      const res = await fetch(`${BASE}/api/admin/seed`, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Seed failed");
+      }
+      const data = await res.json();
+      toast({
+        title: lang === "ar" ? "تمت تعبئة البيانات بنجاح" : "Data seeded successfully",
+        description: lang === "ar"
+          ? `أُضيف ${data.counts.doctors} أطباء، ${data.counts.services} خدمات، ${data.counts.packages} باقات، ${data.counts.testimonials} تجارب، ${data.counts.appointments} مواعيد.`
+          : `Added ${data.counts.doctors} doctors, ${data.counts.services} services, ${data.counts.packages} packages, ${data.counts.testimonials} testimonials, ${data.counts.appointments} appointments.`,
+      });
+      await queryClient.invalidateQueries();
+    } catch (err: unknown) {
+      toast({
+        title: lang === "ar" ? "فشل تعبئة البيانات" : "Seed failed",
+        description: err instanceof Error ? err.message : "Unknown error",
+        variant: "destructive",
+      });
+    } finally {
+      setSeeding(false);
+      setSeedConfirmOpen(false);
+    }
+  };
 
   const statusData = stats ? [
     { name: lang === "ar" ? "قيد الانتظار" : "Pending", value: stats.pendingAppointments || 0 },
@@ -69,14 +113,48 @@ export default function Dashboard() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Playfair Display, serif" }}>
-            {lang === "ar" ? "لوحة التحكم" : "Dashboard"}
-          </h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            {lang === "ar" ? "نظرة عامة على نشاط العيادة" : "Overview of clinic activity"}
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Playfair Display, serif" }}>
+              {lang === "ar" ? "لوحة التحكم" : "Dashboard"}
+            </h1>
+            <p className="text-muted-foreground text-sm mt-1">
+              {lang === "ar" ? "نظرة عامة على نشاط العيادة" : "Overview of clinic activity"}
+            </p>
+          </div>
+          <Button
+            onClick={() => setSeedConfirmOpen(true)}
+            disabled={seeding}
+            className="bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 shadow-lg gap-2"
+            data-testid="seed-button"
+          >
+            {seeding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+            {lang === "ar" ? "تعبئة بيانات تجريبية" : "Seed Demo Data"}
+          </Button>
         </div>
+
+        <AlertDialog open={seedConfirmOpen} onOpenChange={setSeedConfirmOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="flex items-center gap-2">
+                <Database className="w-5 h-5 text-primary" />
+                {lang === "ar" ? "تعبئة بيانات تجريبية" : "Seed Demo Data"}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                {lang === "ar"
+                  ? "سيتم حذف كل بيانات الأطباء والخدمات والباقات والشهادات والمواعيد الحالية، وإعادة تعبئتها ببيانات تجريبية غنية. لن يتم حذف حسابات المشرفين. هل تريد المتابعة؟"
+                  : "This will delete all current doctors, services, packages, testimonials and appointments, and replace them with rich demo data. Admin accounts will be preserved. Continue?"}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={seeding}>{lang === "ar" ? "إلغاء" : "Cancel"}</AlertDialogCancel>
+              <AlertDialogAction onClick={handleSeed} disabled={seeding} className="bg-primary">
+                {seeding && <Loader2 className="w-4 h-4 animate-spin me-2" />}
+                {lang === "ar" ? "نعم، تعبئة الآن" : "Yes, seed now"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {/* KPIs */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

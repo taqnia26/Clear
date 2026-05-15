@@ -7,6 +7,7 @@ import packagesRouter from "./packages";
 import appointmentsRouter from "./appointments";
 import testimonialsRouter from "./testimonials";
 import dashboardRouter from "./dashboard";
+import seedRouter from "./seed";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use(packagesRouter);
 router.use(appointmentsRouter);
 router.use(testimonialsRouter);
 router.use(dashboardRouter);
+router.use(seedRouter);
 
 export default router;
