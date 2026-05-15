@@ -35,7 +35,7 @@ export default function Login() {
         throw new Error(data.error || "Login failed");
       }
       const data = await res.json();
-      setUser(data.admin);
+      setUser(data.user);
       navigate("/admin/dashboard");
     } catch (err: unknown) {
       toast({

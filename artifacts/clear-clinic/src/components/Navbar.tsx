@@ -81,6 +81,8 @@ export default function Navbar() {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <button
+              id="lang-toggle"
+              aria-label="Toggle language"
               onClick={() => setLang(lang === "ar" ? "en" : "ar")}
               className="p-2 rounded-lg hover:bg-accent/50 transition-colors text-foreground/70 hover:text-foreground flex items-center gap-1 text-sm font-medium"
               title="Toggle language"
