@@ -161,13 +161,13 @@ export default function Home() {
 
             <motion.h1
               variants={fadeUp}
-              className="text-5xl sm:text-6xl md:text-8xl font-bold leading-[1.05] tracking-tight"
+              className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold ${lang === "ar" ? "leading-[1.4]" : "leading-[1.05] tracking-tight"}`}
               style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}
             >
               <span className="block text-foreground">
                 {lang === "ar" ? "جمالٌ يُعيد" : "Beauty That"}
               </span>
-              <span className="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+              <span className="block text-primary">
                 {lang === "ar" ? "تعريف الأناقة" : "Redefines Elegance"}
               </span>
             </motion.h1>
