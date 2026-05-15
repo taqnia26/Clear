@@ -48,7 +48,7 @@ export default function Navbar() {
               <span className="text-white font-bold text-sm">ع</span>
             </div>
             <div className="leading-tight">
-              <div className="font-bold text-primary text-base md:text-lg" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+              <div className="font-bold text-primary text-base md:text-lg" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
                 {lang === "ar" ? "عيادة كلير" : "Clear Clinic"}
               </div>
               <div className="text-xs text-muted-foreground hidden sm:block">

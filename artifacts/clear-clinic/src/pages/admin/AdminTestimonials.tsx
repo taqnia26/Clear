@@ -54,7 +54,7 @@ export default function AdminTestimonials() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+          <h1 className="text-2xl font-bold" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
             {lang === "ar" ? "إدارة التجارب والآراء" : "Manage Testimonials"}
           </h1>
           <p className="text-muted-foreground text-sm mt-1">

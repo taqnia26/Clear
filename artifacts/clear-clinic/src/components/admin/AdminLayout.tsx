@@ -53,7 +53,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <span className="text-white font-bold text-sm">ع</span>
         </div>
         <div>
-          <div className="font-bold text-primary text-sm" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+          <div className="font-bold text-primary text-sm" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
             {lang === "ar" ? "عيادة كلير" : "Clear Clinic"}
           </div>
           <div className="text-xs text-muted-foreground">Admin Panel</div>
@@ -153,7 +153,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-accent">
             <Menu className="w-5 h-5" />
           </button>
-          <div className="font-bold text-primary text-sm" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+          <div className="font-bold text-primary text-sm" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
             {lang === "ar" ? "عيادة كلير" : "Clear Clinic"}
           </div>
           <button onClick={() => setSidebarOpen(false)} className={sidebarOpen ? "block" : "invisible"}>

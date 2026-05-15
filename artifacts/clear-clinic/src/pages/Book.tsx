@@ -91,7 +91,7 @@ export default function Book() {
           <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="w-10 h-10 text-primary" />
           </div>
-          <h2 className="text-2xl font-bold text-foreground mb-3" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+          <h2 className="text-2xl font-bold text-foreground mb-3" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
             {t("bookingSuccess")}
           </h2>
           <p className="text-muted-foreground mb-6">
@@ -112,7 +112,7 @@ export default function Book() {
           <Badge className="bg-primary/10 text-primary border-primary/20 mb-3">
             {lang === "ar" ? "احجز موعدك" : "Book Your Appointment"}
           </Badge>
-          <h1 className="text-4xl font-bold mb-3" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+          <h1 className="text-4xl font-bold mb-3" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
             {t("bookAppointment")}
           </h1>
           <p className="text-muted-foreground">

@@ -162,7 +162,7 @@ export default function Home() {
             <motion.h1
               variants={fadeUp}
               className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold ${lang === "ar" ? "leading-[1.4]" : "leading-[1.05] tracking-tight"}`}
-              style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}
+              style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}
             >
               <span className="block text-foreground">
                 {lang === "ar" ? "جمالٌ يُعيد" : "Beauty That"}
@@ -243,7 +243,7 @@ export default function Home() {
                 {lang === "ar" ? "✨ لماذا كلير" : "✨ Why Clear"}
               </Badge>
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-bold mb-4 tracking-tight" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+            <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-bold mb-4 tracking-tight" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
               {lang === "ar" ? (<>تجربة <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">لا تُنسى</span></>) : (<>An <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Unforgettable</span> Experience</>)}
             </motion.h2>
             <motion.p variants={fadeUp} className="text-muted-foreground max-w-2xl mx-auto text-lg">
@@ -279,7 +279,7 @@ export default function Home() {
                 <Badge className="bg-primary/10 text-primary border-primary/20 mb-3 px-4 py-1.5">
                   {lang === "ar" ? "خدماتنا" : "Our Services"}
                 </Badge>
-                <h2 className="text-4xl md:text-6xl font-bold tracking-tight" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tight" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
                   {lang === "ar" ? "الخدمات الفاخرة" : "Premium Services"}
                 </h2>
               </motion.div>
@@ -352,7 +352,7 @@ export default function Home() {
                   {lang === "ar" ? "🎁 عروض حصرية" : "🎁 Exclusive Offers"}
                 </Badge>
               </motion.div>
-              <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-bold tracking-tight" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+              <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-bold tracking-tight" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
                 {lang === "ar" ? (<>باقات <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">مميزة</span></>) : (<>Curated <span className="bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">Packages</span></>)}
               </motion.h2>
             </motion.div>
@@ -418,7 +418,7 @@ export default function Home() {
                 <Badge className="bg-primary/10 text-primary border-primary/20 mb-3 px-4 py-1.5">
                   {lang === "ar" ? "👨‍⚕️ نخبة الأطباء" : "👨‍⚕️ Elite Doctors"}
                 </Badge>
-                <h2 className="text-4xl md:text-6xl font-bold tracking-tight mt-3" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+                <h2 className="text-4xl md:text-6xl font-bold tracking-tight mt-3" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
                   {lang === "ar" ? (<>أيدٍ <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">خبيرة</span></>) : (<>Expert <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Hands</span></>)}
                 </h2>
                 <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
@@ -490,7 +490,7 @@ export default function Home() {
                 <Badge className="bg-secondary/20 text-secondary border-secondary/30 mb-3 px-4 py-1.5">
                   {lang === "ar" ? "💬 ما يقولون عنا" : "💬 What They Say"}
                 </Badge>
-                <h2 className="text-4xl md:text-6xl font-bold mt-3" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+                <h2 className="text-4xl md:text-6xl font-bold mt-3" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
                   {lang === "ar" ? "قصص نجاح حقيقية" : "Real Success Stories"}
                 </h2>
               </motion.div>
@@ -535,7 +535,7 @@ export default function Home() {
               <Badge className="bg-primary/10 text-primary border-primary/20 mb-3 px-4 py-1.5">
                 {lang === "ar" ? "❓ أسئلة شائعة" : "❓ FAQ"}
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-bold mb-3 tracking-tight" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+              <h2 className="text-3xl md:text-5xl font-bold mb-3 tracking-tight" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
                 {lang === "ar" ? "إجابات لأهم استفساراتك" : "Answers to Your Top Questions"}
               </h2>
               <p className="text-muted-foreground mb-8">
@@ -566,7 +566,7 @@ export default function Home() {
 
               <div className="relative">
                 <Sparkles className="w-10 h-10 text-secondary mb-5" />
-                <h3 className="text-3xl md:text-4xl font-bold mb-4 leading-tight" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+                <h3 className="text-3xl md:text-4xl font-bold mb-4 leading-tight" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
                   {lang === "ar" ? "زُر عيادة كلير اليوم" : "Visit Clear Clinic Today"}
                 </h3>
                 <p className="text-white/85 mb-8 text-lg leading-relaxed">

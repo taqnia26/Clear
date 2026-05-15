@@ -37,7 +37,7 @@ export default function Services() {
           <Badge className="bg-primary/10 text-primary border-primary/20 mb-3">
             {lang === "ar" ? "خدماتنا" : "Our Services"}
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: lang === "ar" ? "Tajawal, Readex Pro, sans-serif" : "Cormorant Garamond, Playfair Display, serif" }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: lang === "ar" ? "Cairo, sans-serif" : "Cairo, sans-serif" }}>
             {t("ourServices")}
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
